@@ -20,6 +20,10 @@ const shortUrlSchema = new mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
+    },
+
+    qrCode: {
+        type: String
     }
 },{
     timestamps: true

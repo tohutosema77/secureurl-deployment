@@ -5,9 +5,12 @@ import axios from 'axios';
 import { serverUrl } from '../../helpers/Constants';
 import DataTable from '../DataTable/DataTable';
 import { useNavigate } from 'react-router-dom';
+import PaymentButton from '../Payment/PaymentButton';
 interface IContainerProps {}
 
 const Container: React.FunctionComponent<IContainerProps> = () => {
+
+  const [user, setUser] = React.useState<any>(null);
   const [data, setData] = React.useState<UrlData[]>([]);
   const  [reload, setReload] = React.useState<boolean>(false);
   const navigate = useNavigate();
@@ -31,13 +34,30 @@ const Container: React.FunctionComponent<IContainerProps> = () => {
   //   )     
     
   // }
-  React.useEffect(() => {
-    const token = localStorage.getItem("token");
+  // React.useEffect(() => {
+  //   const token = localStorage.getItem("token");
 
-    if(!token){
-      navigate("/login");
-    }
-  }, []);
+  //   if(!token){
+  //     navigate("/login");
+  //   }
+  // }, []);
+ 
+  const fetchUser = async () =>{
+      try {
+        const res= await axios.get(
+          `${serverUrl}/auth/currentUser`,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`
+            }
+          }
+        );
+        console.log("User data:", res.data);
+        setUser(res.data);
+      } catch (error) {
+        console.log(error);
+      }
+  };
 
   const fetchTableData = async () => {
     
@@ -61,8 +81,22 @@ const Container: React.FunctionComponent<IContainerProps> = () => {
 
   };
   
+  // 🔥 MAIN EFFECT (auth + user + data)
   React.useEffect(() => {
-    fetchTableData();
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      navigate("/login");
+    } else {
+      fetchUser();
+      fetchTableData();
+    }
+  }, []);
+   // 🔄 Reload table when needed
+  React.useEffect(() => {
+    if (reload) {
+      fetchTableData();
+    }
   }, [reload]);
 
   React.useEffect(() =>{
@@ -76,6 +110,8 @@ const Container: React.FunctionComponent<IContainerProps> = () => {
 
   return (
     <>
+      {/* <PaymentButton/> */}
+      {!user?.isPremium && <PaymentButton />}
       <FormContainer updateReloadState={updateReloadState} />
       <DataTable updateReloadState={updateReloadState} data={data}/> 
     </>

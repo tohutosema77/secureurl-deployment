@@ -10,6 +10,7 @@ import Register from './pages/Register';
 import Home from './pages/Home';
 import Logout from './pages/Logout';
 import ProtectedRoute from './components/ProtectedRoute';
+import AnalyticsPage from './pages/AnalyticsPage';
 function App() {
 
   return (
@@ -20,6 +21,11 @@ function App() {
         <Route path='/' element={<Home/>}/>
         <Route path='/login' element={<Login/>}/>
         <Route path='/register' element={<Register/>}/>
+        {/* <Route 
+          path='/analytics/:shortUrl' 
+          element={<AnalyticsPage/>
+          
+          }/> */}
         {/* <Route path='/dashboard' element={<Container/>}/>   */}
         <Route 
           path='/dashboard' 
@@ -28,6 +34,15 @@ function App() {
               <Container/>
             </ProtectedRoute>
           }/> 
+
+          <Route 
+          path='/analytics/:shortUrl' 
+          element={
+          <ProtectedRoute>          
+              <AnalyticsPage/>                
+          </ProtectedRoute>        
+          }/>
+          
         <Route path='/logout' element={<Logout/>}/>     
       </Routes>
       <Footer/>
