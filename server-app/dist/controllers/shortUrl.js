@@ -278,6 +278,7 @@ const redirectShortUrl = (req, res) => __awaiter(void 0, void 0, void 0, functio
         const ip = req.headers['x-forwarded-for'] || req.ip || req.socket.remoteAddress || "unknown";
         const geo = geoip_lite_1.default.lookup(ip); // returns { country: 'IN', city: 'Kolkata' } etc.
         yield analyticsModel_1.default.create({
+            // shortUrl: req.params.shortUrl,
             shortUrl: req.params.shortUrl,
             ipAddress: ip,
             country: (geo === null || geo === void 0 ? void 0 : geo.country) || "Unknown",

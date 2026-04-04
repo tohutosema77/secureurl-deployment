@@ -46,6 +46,9 @@ app.use(express_1.default.static(path_1.default.join(__dirname1, "../client-app/
 app.get("*", (req, res) => {
     res.sendFile(path_1.default.resolve(__dirname1, "../client-app/url-shortner-app/dist", "index.html"));
 });
+// app.get("/*", (req, res)=>{
+//     res.sendFile(path.resolve(__dirname1,"../client-app/url-shortner-app/dist","index.html" ));
+// });
 // ------------------ Server ------------------
 app.listen(port, () => {
     console.log(`Server started successfully on port : ${port}`);

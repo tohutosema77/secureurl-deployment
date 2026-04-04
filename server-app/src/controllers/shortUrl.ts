@@ -254,7 +254,8 @@ export const redirectShortUrl = async (req: express.Request, res: express.Respon
         const geo=geoip.lookup(ip); // returns { country: 'IN', city: 'Kolkata' } etc.
 
         await Analytics.create({
-            shortUrl: req.params.shortUrl,
+            // shortUrl: req.params.shortUrl,
+            shortUrl: req.params.shortUrl as string,
             ipAddress: ip,
             country: geo?.country || "Unknown",
             city: geo?.city || "Unknown",
