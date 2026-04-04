@@ -18,6 +18,10 @@ const userSchema = new mongoose_1.default.Schema({
         type: String,
         required: [true, "Please add the user password"],
         // select: false
-    }
+    },
+    isPremium: {
+        type: Boolean,
+        default: false
+    },
 }, { timestamps: true });
 exports.default = mongoose_1.default.model("User", userSchema);

@@ -28,6 +28,7 @@ router.post("/shortUrl", (req, res, next) => {
     next();
 }, authMiddleware_1.protect, shortUrl_1.createUrl);
 // Dashboard → URLs of logged-in user
+// router.get("/shortUrl/myurls", getUserUrls);
 router.get("/shortUrl/myurls", authMiddleware_1.protect, shortUrl_1.getUserUrls);
 // Optional → all URLs
 router.get("/shortUrl", authMiddleware_1.protect, shortUrl_1.getAllUrl);
